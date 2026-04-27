@@ -1,8 +1,12 @@
+# 01_data.R
+
 library(pxweb)
 
 
-# Folkmängden efter ålder och kön. År 1968 - 2024
+# Hämta data från SCB API
 
+
+# Befolkning
 befolkning <- pxweb_get(
   url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/BE/BE0101/BE0101A/BefolkningR1860N", 
   query = list(
@@ -13,12 +17,12 @@ befolkning <- pxweb_get(
   )
 )
 
-befolkning_df = as.data.frame(befolkning, column.name.type = "text", 
-                              variable.value.type = "text")
+befolkning_df <- as.data.frame(befolkning,
+  column.name.type = "text",
+  variable.value.type = "text"
+)
 
-
-# Levande födda efter moderns ålder
-
+# Födda
 Födda <- pxweb_get(
   url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/BE/BE0101/BE0101H/FoddaK", 
   query = list( 
@@ -26,15 +30,16 @@ Födda <- pxweb_get(
     Kon = c("*"), 
     Region = c("00"),
     ContentsCode = c("BE0101E2"), 
-    Tid = as.character(2000:2024))
+    Tid = as.character(2000:2024)
+  )
 )
 
-Födda_df <- as.data.frame(Födda, column.name.type = "text", 
-                          variable.value.type = "text")
+Födda_df <- as.data.frame(Födda,
+  column.name.type = "text",
+  variable.value.type = "text"
+)
 
-
-# Döda efter ålder och kön
-
+# Döda
 Döda <- pxweb_get(
   url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/BE/BE0101/BE0101I/DodaHandelseK", 
   query = list(
@@ -46,12 +51,12 @@ Döda <- pxweb_get(
   )
 )
 
-Döda_df <- as.data.frame(Döda, column.name.type = "text", 
-                         variable.value.type = "text")
+Döda_df <- as.data.frame(Döda,
+  column.name.type = "text",
+  variable.value.type = "text"
+)
 
-
-# In- och utvandring efter ålder och kön
-
+# Migration
 Migration <- pxweb_get(
   url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/BE/BE0101/BE0101J/ImmiEmiFlyttN", 
   query = list(
@@ -64,5 +69,7 @@ Migration <- pxweb_get(
   )
 )
 
-Migration_df <- as.data.frame(Migration, column.name.type = "text", 
-                              variable.value.type = "text")
+Migration_df <- as.data.frame(Migration,
+  column.name.type = "text",
+  variable.value.type = "text"
+)
