@@ -1,0 +1,156 @@
+---
+title: "Stokastisk befolkningsframskrivning och försörjningsbörda 2024–2044"
+author: "Tobias Bengtsson"
+date: 13 juni 2026
+lang: sv
+
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-summary: "Visa R-kod"
+    embed-resources: true
+    fig-width: 10
+    fig-height: 6
+
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| echo: false
+#| results: hide
+library(pxweb)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(scales)
+
+source("Befolkning.R")
+
+```
+
+# Inledning
+
+Denna rapport analyserar den framtida befolkningsutvecklingen i Sverige under perioden 2024–2044. Fokus ligger på hur relationen mellan den arbetsföra befolkningen och den beroende befolkningen förändras över tid.
+
+Analysen belyser tre centrala mått: ungdoms-, äldre- och total försörjningskvot. Dessa används för att beskriva hur många personer i icke-arbetsför ålder som varje person i arbetsför ålder behöver försörja.
+
+# Sammanfattning
+
+I denna rapport redovisas en framskrivning av Sveriges befolkning för perioden 2024–2044. Resultaten visar att försörjningsbördan ökar under hela perioden, framför allt till följd av en växande andel äldre i befolkningen.
+
+Utvecklingen skiljer sig mellan scenarierna, men den övergripande trenden är densamma: antalet personer i arbetsför ålder ökar långsammare än antalet barn och äldre. Detta leder till att försörjningskvoterna stiger i samtliga scenarier.
+
+Den största ökningen sker i äldreförsörjningskvoten, som stiger tydligt redan under de första tio åren av framskrivningen. Ungdomsförsörjningskvoten är mer stabil men varierar mellan scenarierna beroende på antaganden om fertilitet.
+
+Total försörjningskvot ökar i samtliga scenarier och skillnaderna mellan dem blir tydligare över tid.
+
+# Framskrivning och demografisk utveckling
+
+```{r}
+#| echo: false
+ggplotly(p_pyramid, tooltip = "text") %>%
+  style(hoverlabel = list(bgcolor = "white"))
+```
+
+```{r}
+#| echo: false
+knitr::kable(
+  bas_table_10y, 
+  caption = "Tabell 1. Befolkningens åldersfördelning år 2024 och 2049",
+  align = "lccccccccc"
+)
+```
+
+Befolkningsframskrivningen för perioden 2024–2049 bygger på en demografisk kohortkomponentmodell där befolkningen åldras ett år i taget. Utvecklingen bestäms av antaganden om fertilitet, dödlighet och nettoflyttning.\
+\
+Utgångspunkten är befolkningen år 2024, uppdelad efter ålder och kön. För varje tidssteg flyttas befolkningen fram ett år i ålder, samtidigt som justeringar görs för dödsfall, födelser och migration.
+
+Utvecklingen mellan 2024 och 2049 visar att den totala åldersstrukturen i befolkningen förändras gradvis snarare än abrupt. Andelen barn i åldern 0–9 år ökar något, medan andelen i åldern 10–19 år minskar svagt. Detta indikerar en stabil men något ojämn utveckling i de yngre åldersgrupperna, vilket i stor utsträckning speglar tidigare fertilitetsnivåer.
+
+Inom den arbetsföra befolkningen sker en tydligare förskjutning mellan åldersgrupper. Andelen i åldern 30–39 år minskar samtidigt som andelen i åldersgrupperna 40–49 och 50–59 år ökar något. Detta innebär att arbetskraften i genomsnitt förskjuts uppåt i ålder, även om den totala andelen i arbetsför ålder (20–64 år) förblir relativt stabil.
+
+Den äldre befolkningen visar en mer begränsad förändring i total andel, men en svag ökning i åldersgruppen 60–69 år och en stabil andel i gruppen 80 år och äldre. Detta innebär att det framför allt är sammansättningen inom den äldre befolkningen som förändras, snarare än dess totala storlek.
+
+Sammantaget indikerar framskrivningen en gradvis omstrukturering av befolkningens ålderssammansättning snarare än en kraftig förändring i totalnivåer. Detta innebär att förändringar i försörjningsbördan i första hand drivs av omfördelningar mellan åldersgrupper, snarare än av förändringar i befolkningens totala storlek.
+
+Den observerade förskjutningen i befolkningsstrukturen utgör grunden för analysen av försörjningskvoterna i de efterföljande scenarierna.
+
+## Scenarier för framtida demografisk utveckling
+
+För att analysera hur känslig den framtida försörjningsbördan är för förändringar i centrala demografiska komponenter har tre alternativa scenarier konstruerats. Scenarierna utgår från basscenariot men varierar antaganden om fertilitet, dödlighet och nettoflyttning. Samtliga scenarier baseras på samma initiala befolkning år 2024 och följer samma kohortkomponentstruktur, men skiljer sig åt i antaganden om de demografiska komponenternas utveckling över tid.
+
+Syftet med scenarierna är att illustrera hur små förändringar i demografiska beteenden kan få kumulativa effekter över tid, och därmed påverka relationen mellan den arbetsföra och den beroende befolkningen.
+
+## Antaganden i respektive scenario
+
+Basscenariot utgör referensbanan där alla komponenter följer sina trendbaserade antaganden.
+
+Hög migration innebär en ökad nettoinflyttning jämfört med basscenariot, vilket leder till en något yngre befolkning över tid.
+
+Låg fertilitet innebär en lägre fruktsamhet än i basscenariot, vilket på sikt reducerar inflödet av unga individer i befolkningen.
+
+Stress-scenario kombinerar lägre fertilitet, något högre dödlighet och minskad nettoflyttning. Detta scenario illustrerar en mer ogynnsam demografisk utveckling
+
+```{r}
+#| echo: false
+ggplotly(p, tooltip = "text") %>%
+  style(hoverlabel = list(bgcolor = "white")) # Total
+```
+
+```{r}
+#| echo: false
+ggplotly(p_äldre, tooltip = "text") %>% style(hoverlabel = list(bgcolor = "white"))
+
+```
+
+```{r}
+#| echo: false
+ggplotly(p_ungdom, tooltip = "text") %>% style(hoverlabel = list(bgcolor = "white"))
+
+```
+
+Utvecklingen av försörjningskvoterna visar att samtliga scenarier följer en stigande trend över tid, men med tydliga nivåskillnader beroende på antaganden om fertilitet, dödlighet och migration. Skillnaderna mellan scenarierna är relativt små i början av perioden men ökar successivt över tid, vilket visar att demografiska antaganden får kumulativa effekter på befolkningens åldersstruktur.
+
+Äldreförsörjningskvoten visar den tydligaste stabiliteten mellan scenarierna, vilket indikerar att den äldre befolkningen i hög grad påverkas av tidigare demografiska strukturer snarare än kortsiktiga förändringar i antaganden. Ungdoms- och total försörjningskvot är mer känsliga för förändringar i fertilitet och migration, vilket resulterar i större variation mellan scenarierna.
+
+Sammantaget visar resultaten att även relativt små skillnader i demografiska antaganden kan få betydande effekter på försörjningsbördan över en 25-årsperiod.
+
+# Osäkerhetsanalys av försörjningsbördan
+
+För att belysa osäkerheten i framskrivningen har en stokastisk simulering genomförts där fertilitet, dödlighet och nettoflyttning tillåts variera kring sina historiskt observerade nivåer. Resultaten redovisas som ett osäkerhetsintervall för slutåret 2044 baserat på 1 000 simuleringar. Analysen beskriver spridningen i möjliga framtida utfall snarare än en enskild prognosbana.
+
+Intervallen omfattar den 10:e till 90:e percentilen av de simulerade resultaten och kan därmed tolkas som ett centralt osäkerhetsband kring den förväntade utvecklingen.
+
+```{r}
+#| echo: false
+knitr::kable(
+  stokastisk_sammanfattning,
+  caption = "Tabell 2. Osäkerhetsintervall för försörjningskvoterna år 2044 baserat på 1 000 simulerade framtider",
+  align = "lccc"
+)
+```
+
+
+## Osäkerhet och variation i försörjningskvoterna
+
+Osäkerheten i försörjningskvoterna ökar över tid, vilket följer av att små variationer i de demografiska komponenterna ackumuleras genom framskrivningsperioden.
+
+Ungdomsförsörjningskvoten uppvisar den största relativa spridningen, med en nivå mellan 38,3 och 40,4 procent vid periodens slut. Variationerna drivs främst av osäkerhet i fertilitetsantagandena, vilka påverkar storleken på de yngre kohorterna i befolkningen.
+
+Äldreförsörjningskvoten uppvisar en mer begränsad spridning, mellan 35,2 och 36,2 procent. Den lägre variationen förklaras av att den äldre befolkningen i stor utsträckning utgörs av redan existerande kohorter, vilket innebär att kortsiktiga variationer i antaganden får begränsat genomslag.
+
+Den totala försörjningskvoten kombinerar dessa två komponenter och visar en nivå omkring 75 procent vid periodens slut, med ett osäkerhetsintervall mellan 73,8 och 76,1 procent.
+
+## Samlad bedömning
+
+Sammantaget visar resultaten att utvecklingen av försörjningsbördan är stabil i sin riktning över samtliga simuleringar. Samtliga realiseringar indikerar en ökning av försörjningskvoten under perioden 2024–2044.
+
+Osäkerheten påverkar främst nivåerna i den framtida utvecklingen, medan den övergripande trenden är robust.
