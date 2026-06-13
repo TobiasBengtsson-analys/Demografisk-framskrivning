@@ -11,7 +11,7 @@ Projektet är utvecklat i R och resultaten presenteras i en interaktiv Quarto-ra
 ## Rapport
 Den färdiga rapporten finns publicerad via GitHub Pages:
 
-**[Klicka här för att läsa den interaktiva rapporten live]https://tobiasbengtsson-analys.github.io/Demografisk-framskrivning/**
+**[Klicka här för att läsa den interaktiva rapporten live](https://tobiasbengtsson-analys.github.io/Demografisk-framskrivning/)**
 
 ### Rapporten innehåller:
 * **Befolkningsframskrivning 2024–2044:** Analys av förändringar i den demografiska åldersstrukturen.
