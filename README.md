@@ -1,4 +1,4 @@
-# Demografisk-framskrivning
+# Demografisk framskrivning
 Kohortbaserad demografisk framskrivning av Sverige 2024–2049
 
 ## Om projektet
