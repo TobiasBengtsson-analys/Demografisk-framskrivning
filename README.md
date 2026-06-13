@@ -43,7 +43,7 @@ Analysen bygger på öppna data från **Statistiska centralbyrån (SCB)**, hämt
 
 ## Projektstruktur
 ```text
-.
+
 ├── Demografi.qmd
 ├── Befolkning.R
 ├── Simulering.R
